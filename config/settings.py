@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cash_flow',
+    'django_filters', # Подключить django-filter
+    'cash_flow', # Подключить приложение cash_flow
 ]
 
 MIDDLEWARE = [

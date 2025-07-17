@@ -29,7 +29,7 @@ class OperationType(models.Model):
 
 class Category(models.Model):
     '''Модель для категорий, привязанных к типам операций'''
-    name = models.CharField(max_length=100, unique=True, verbose_name='Название категории')
+    name = models.CharField(max_length=100, verbose_name='Название категории')
     operation_type = models.ForeignKey(OperationType, on_delete=models.CASCADE, verbose_name='Тип операции')
 
     def __str__(self):

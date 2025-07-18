@@ -64,14 +64,14 @@
                                     {% if transaction.status == 'completed' %}bg-success
                                     {% elif transaction.status == 'pending' %}bg-warning text-dark
                                     {% else %}bg-secondary{% endif %}">
-                                    {{ transaction.get_status_display }}
+                                    {{ transaction.status }}
                                 </span>
                             </td>
                             <td>
                                 <span class="badge
                                     {% if transaction.operation_type == 'income' %}bg-success
                                     {% else %}bg-danger{% endif %}">
-                                    {{ transaction.get_operation_type_display }}
+                                    {{ transaction.operation_type }}
                                 </span>
                             </td>
                             <td>{{ transaction.category.name|default:"-" }}</td>

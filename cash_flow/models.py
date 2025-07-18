@@ -72,7 +72,7 @@ class Transaction(models.Model):
     # Сумма
     amount = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Сумма (руб)')
     # Комментарий
-    comment = models.TextField(null=True, blank=True, verbose_name='Комментарий', help_text='Введите комментарий')
+    comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
 
     def __str__(self):
         return f'{self.created_at} | {self.operation_type} | {self.amount} руб. | {self.status}'

@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 
 from cash_flow.filters import TransactionFilter
 from cash_flow.models import Transaction
@@ -36,4 +37,12 @@ class TransactionListView(ListView):
         # Возвращаем обновленный набор данных
         return context
 
+
+class TransactionCreateView(CreateView):
+    '''Представление для создания транзакции'''
+    model = Transaction
+    # Поля, которые будут отображться в форме
+    fields = '__all__'
+    # Куда пользователь будет перенаправлен после успешной отправки формы
+    success_url = reverse_lazy('transactions')
 

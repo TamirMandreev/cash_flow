@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from cash_flow.filters import TransactionFilter
 from cash_flow.models import Transaction
@@ -51,5 +51,11 @@ class TransactionUpdateView(UpdateView):
     '''Представление для обновления транзакции'''
     model = Transaction
     fields = '__all__'
+    success_url = reverse_lazy('transactions')
+
+
+class TransactionDeleteView(DeleteView):
+    '''Представление для удаления транзакции'''
+    model = Transaction
     success_url = reverse_lazy('transactions')
 

@@ -34,7 +34,10 @@
         <td>{{ transaction.subcategory }}</td>
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.comment }}</td>
-        <td><a href="{% url 'transaction_update' transaction.pk %}">Редактировать</a></td>
+        <td>
+            <a href="{% url 'transaction_update' transaction.pk %}">Редактировать</a><br>
+            <a class="text-danger" href="{% url 'transaction_delete' transaction.pk %}">Удалить</a>
+        </td>
     </tr>
     <!-- empty - специальная часть цикла for, которая срабатывает, когда в переданной коллекции нет элементов -->
     {% empty %}

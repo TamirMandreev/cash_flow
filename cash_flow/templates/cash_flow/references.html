@@ -1,0 +1,31 @@
+{% extends 'cash_flow/base.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название справочника</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td><a href="{% url 'statuses' %}">Статусы</a></td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td><a>Типы</a></td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td><a>Категории</a></td>
+    </tr>
+    <tr>
+        <th scope="row">4</th>
+        <td><a>Подкатегории</a></td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}

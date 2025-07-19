@@ -100,22 +100,49 @@ class OperationTypeListView(ListView):
 
 
 class OperationTypeCreateView(CreateView):
-    '''Представление для создания статуса'''
+    '''Представление для создания типа операции'''
     model = OperationType
     fields = '__all__'
     success_url = reverse_lazy('operation_types')
 
 
 class OperationTypeUpdateView(UpdateView):
-    '''Представление для обновления статуса'''
+    '''Представление для обновления типа операции'''
     model = OperationType
     fields = '__all__'
     success_url = reverse_lazy('operation_types')
 
 
 class OperationTypeDeleteView(DeleteView):
-    '''Представление для удаления статуса'''
+    '''Представление для удаления типа операции'''
     model = OperationType
     success_url = reverse_lazy('operation_types')
+
+
+class CategoryListView(ListView):
+    '''Представление для отображения списка категорий'''
+    model = Category
+    template_name = 'cash_flow/category_list.html'
+    context_object_name = 'categories'
+
+
+class CategoryCreateView(CreateView):
+    '''Представление для создания категории'''
+    model = Category
+    fields = '__all__'
+    success_url = reverse_lazy('categories')
+
+
+class CategoryUpdateView(UpdateView):
+    '''Представление для обновления категории'''
+    model = Category
+    fields = '__all__'
+    success_url = reverse_lazy('categories')
+
+
+class CategoryDeleteView(DeleteView):
+    '''Представление для удаления категории'''
+    model = Category
+    success_url = reverse_lazy('categories')
 
 

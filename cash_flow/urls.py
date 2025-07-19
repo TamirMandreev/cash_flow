@@ -18,4 +18,9 @@ urlpatterns = [
     path('operation_types/create/', views.OperationTypeCreateView.as_view(), name='operation_type_create' ),
     path('operation_types/update/<int:pk>', views.OperationTypeUpdateView.as_view(), name='operation_type_update' ),
     path('operation_types/delete/<int:pk>', views.OperationTypeDeleteView.as_view(), name='operation_type_delete' ),
+
+    path('categories/', views.CategoryListView.as_view(), name='categories' ),
+    path('categories/create/', views.CategoryCreateView.as_view(), name='category_create' ),
+    path('categories/update/<int:pk>', views.CategoryUpdateView.as_view(), name='category_update' ),
+    path('categories/delete/<int:pk>', views.CategoryDeleteView.as_view(), name='category_delete' ),
 ]

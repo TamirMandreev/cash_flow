@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from cash_flow.filters import TransactionFilter
-from cash_flow.models import Transaction
+from cash_flow.models import Transaction, Status, OperationType, Category, SubCategory
 
 
 class TransactionListView(ListView):
@@ -58,4 +58,36 @@ class TransactionDeleteView(DeleteView):
     '''Представление для удаления транзакции'''
     model = Transaction
     success_url = reverse_lazy('transactions')
+
+
+class ReferencesTemplateView(TemplateView):
+    '''Представление для отображения справочников'''
+    template_name = 'cash_flow/references.html'
+
+
+class StatusListView(ListView):
+    '''Представление для отображения списка статусов'''
+    model = Status
+    template_name = 'cash_flow/status_list.html'
+    context_object_name = 'statuses'
+
+
+class StatusCreateView(CreateView):
+    '''Представление для создания статуса'''
+    model = Status
+    fields = '__all__'
+    success_url = reverse_lazy('statuses')
+
+
+class StatusUpdateView(UpdateView):
+    '''Представление для обновления статуса'''
+    model = Status
+    fields = '__all__'
+    success_url = reverse_lazy('statuses')
+
+
+class StatusDeleteView(DeleteView):
+    '''Представление для удаления статуса'''
+    model = Status
+    success_url = reverse_lazy('statuses')
 

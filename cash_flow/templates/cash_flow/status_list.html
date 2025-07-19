@@ -1,0 +1,30 @@
+{% extends 'cash_flow/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-10"><h3>Список статусов</h3></div>
+    <div class="col-2"><a type="button" class="btn btn-success" href="{% url 'status_create' %}">Создать статус</a></div>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Наименование статуса</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for status in statuses %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ status.name }}</td>
+        <td>
+            <a href="{% url 'status_update' status.pk %}">Редактировать</a><br>
+            <a class="text-danger" href="{% url 'status_delete' status.pk %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

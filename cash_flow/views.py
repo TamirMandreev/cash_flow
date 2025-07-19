@@ -91,3 +91,31 @@ class StatusDeleteView(DeleteView):
     model = Status
     success_url = reverse_lazy('statuses')
 
+
+class OperationTypeListView(ListView):
+    '''Представление для отображения списка типов операций'''
+    model = OperationType
+    template_name = 'cash_flow/operation_type_list.html'
+    context_object_name = 'operation_types'
+
+
+class OperationTypeCreateView(CreateView):
+    '''Представление для создания статуса'''
+    model = OperationType
+    fields = '__all__'
+    success_url = reverse_lazy('operation_types')
+
+
+class OperationTypeUpdateView(UpdateView):
+    '''Представление для обновления статуса'''
+    model = OperationType
+    fields = '__all__'
+    success_url = reverse_lazy('operation_types')
+
+
+class OperationTypeDeleteView(DeleteView):
+    '''Представление для удаления статуса'''
+    model = OperationType
+    success_url = reverse_lazy('operation_types')
+
+

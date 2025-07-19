@@ -13,4 +13,9 @@ urlpatterns = [
     path('statuses/create/', views.StatusCreateView.as_view(), name='status_create'),
     path('statuses/update/<int:pk>/', views.StatusUpdateView.as_view(), name='status_update'),
     path('statuses/delete/<int:pk>/', views.StatusDeleteView.as_view(), name='status_delete'),
+
+    path('operation_types/', views.OperationTypeListView.as_view(), name='operation_types' ),
+    path('operation_types/create/', views.OperationTypeCreateView.as_view(), name='operation_type_create' ),
+    path('operation_types/update/<int:pk>', views.OperationTypeUpdateView.as_view(), name='operation_type_update' ),
+    path('operation_types/delete/<int:pk>', views.OperationTypeDeleteView.as_view(), name='operation_type_delete' ),
 ]

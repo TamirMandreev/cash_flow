@@ -18,7 +18,7 @@
     {% for category in categories %}
     <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ category.name }}</td>
+        <td>{{ category}}</td>
         <td>
             <a href="{% url 'category_update' category.pk %}">Редактировать</a><br>
             <a class="text-danger" href="{% url 'category_delete' category.pk %}">Удалить</a>

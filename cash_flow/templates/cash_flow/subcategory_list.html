@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-10"><h3>Список подкатегорий</h3></div>
-    <div class="col-2"><a type="button" class="btn btn-success" href="{% url 'subcategory_create' %}">Создать категорию</a></div>
+    <div class="col-2"><a type="button" class="btn btn-success" href="{% url 'subcategory_create' %}">Создать подкатегорию</a></div>
 </div>
 <table class="table">
     <thead>
@@ -18,7 +18,7 @@
     {% for subcategory in subcategories %}
     <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ subcategory.name }}</td>
+        <td>{{ subcategory }}</td>
         <td>
             <a href="{% url 'subcategory_update' subcategory.pk %}">Редактировать</a><br>
             <a class="text-danger" href="{% url 'subcategory_delete' subcategory.pk %}">Удалить</a>

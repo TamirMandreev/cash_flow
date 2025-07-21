@@ -146,3 +146,30 @@ class CategoryDeleteView(DeleteView):
     success_url = reverse_lazy('categories')
 
 
+class SubCategoryListView(ListView):
+    '''Представление для отображения списка подкатегорий'''
+    model = SubCategory
+    template_name = 'cash_flow/subcategory_list.html'
+    context_object_name = 'subcategories'
+
+
+class SubCategoryCreateView(CreateView):
+    '''Представление для создания подкатегории'''
+    model = Category
+    fields = '__all__'
+    success_url = reverse_lazy('subcategories')
+
+
+class SubCategoryUpdateView(UpdateView):
+    '''Представление для обновления подкатегории'''
+    model = SubCategory
+    fields = '__all__'
+    success_url = reverse_lazy('subcategories')
+
+
+class SubCategoryDeleteView(DeleteView):
+    '''Представление для удаления подкатегории'''
+    model = Category
+    success_url = reverse_lazy('categories')
+
+

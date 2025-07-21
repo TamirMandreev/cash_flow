@@ -69,12 +69,26 @@ class TransactionCreateView(CreateView):
         form.fields["category"].queryset = Category.objects.none()
         form.fields["subcategory"].queryset = SubCategory.objects.none()
 
-        # Если в запросе есть operation_type, то фильтруем категории
+        # Если в запросе есть operation_type, фильтруем категории
         if "operation_type" in self.request.GET:
-            operation_type_id = int(self.request.GET["operation_type"])
+            # Получить id типа операции
+            operation_type_id = int(self.request.GET.get("operation_type"))
+            # В поле category установить отфильтрованный по типу операции queryset
             form.fields["category"].queryset = Category.objects.filter(
                 operation_type_id=operation_type_id
             ).order_by("name")
+
+        # Если в запросе есть category, фильтруем подкатегории
+        elif "category" in self.request.GET:
+            # Получить id категории
+            category_id = int(self.request.GET.get("category"))
+            # В поле subcategory установить отфильтрованный по категории queryset
+            form.fields["subcategory"].queryset = SubCategory.objects.filter(
+                category_id=category_id
+            ).order_by("name")
+
+        # Вернуть форму
+        return form
 
 
 class TransactionUpdateView(UpdateView):

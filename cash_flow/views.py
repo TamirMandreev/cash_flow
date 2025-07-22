@@ -1,4 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
 from django.views.generic import (
@@ -12,6 +14,32 @@ from django.views.generic import (
 from cash_flow.filters import TransactionFilter
 from cash_flow.models import Transaction, Status, OperationType, Category, SubCategory
 
+
+def load_categories(request):
+    '''Представление для обработки AJAX-запроса'''
+    # Получить id типа операции
+    operation_type_id = request.GET.get('operation_type_id')
+    # Отфильтровать категории по типу
+    categories = Category.objects.filter(operation_type_id=operation_type_id).order_by('name')
+    # Подготовить контекст для передачи в шаблон
+    context = {'categories': categories}
+    # Отрендерить шаблон
+    options = render_to_string('cash_flow/category_dropdown_list_options.html', context)
+    # Вернуть JSON-ответ
+    return JsonResponse({'options': options})
+
+def load_subcategories(request):
+    '''Представление для обработки AJAX-запроса'''
+    # Получить id категории
+    category_id = request.GET.get('category_id')
+    # Отфильтровать подкатегории по категории
+    subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
+    # Подготовить контекст для передачи в шаблон
+    context = {'subcategories': subcategories}
+    # Отрендерить шаблон
+    options = render_to_string('cash_flow/subcategory_dropdown_list_options.html', context)
+    # Вернуть JSON-ответ
+    return JsonResponse({'options': options})
 
 class TransactionListView(ListView):
     """Представление для отображения списка транзакций"""
@@ -69,19 +97,19 @@ class TransactionCreateView(CreateView):
         form.fields["category"].queryset = Category.objects.none()
         form.fields["subcategory"].queryset = SubCategory.objects.none()
 
-        # Если в запросе есть operation_type, фильтруем категории
-        if "operation_type" in self.request.GET:
+        # Если в форме есть operation_type, фильтруем категории
+        if "operation_type" in form.data:
             # Получить id типа операции
-            operation_type_id = int(self.request.GET.get("operation_type"))
+            operation_type_id = int(form.data.get("operation_type"))
             # В поле category установить отфильтрованный по типу операции queryset
             form.fields["category"].queryset = Category.objects.filter(
                 operation_type_id=operation_type_id
             ).order_by("name")
 
-        # Если в запросе есть category, фильтруем подкатегории
-        elif "category" in self.request.GET:
+        # Если в форме есть category, фильтруем подкатегории
+        if "category" in form.data:
             # Получить id категории
-            category_id = int(self.request.GET.get("category"))
+            category_id = int(form.data.get("category"))
             # В поле subcategory установить отфильтрованный по категории queryset
             form.fields["subcategory"].queryset = SubCategory.objects.filter(
                 category_id=category_id

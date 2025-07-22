@@ -60,6 +60,8 @@
                         </a>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>
@@ -74,4 +76,46 @@
         border-color: #dc3545;
     }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#id_operation_type').change(function() {
+        var operationTypeId = $(this).val();
+        if (operationTypeId) {
+            $.ajax({
+                url: '{% url "load_categories" %}',
+                data: {
+                    'operation_type_id': operationTypeId
+                },
+                success: function(data) {
+                    $('#id_category').html(data.options);
+                    $('#id_subcategory').html('<option value="">---------</option>');
+                }
+            });
+        } else {
+            $('#id_category').html('<option value="">---------</option>');
+            $('#id_subcategory').html('<option value="">---------</option>');
+        }
+    });
+
+    $('#id_category').change(function() {
+        var categoryId = $(this).val();
+        if (categoryId) {
+            $.ajax({
+                url: '{% url "load_subcategories" %}',
+                data: {
+                    'category_id': categoryId
+                },
+                success: function(data) {
+                    $('#id_subcategory').html(data.options);
+                }
+            });
+        } else {
+            $('#id_subcategory').html('<option value="">---------</option>');
+        }
+    });
+});
+</script>
+
 {% endblock %}

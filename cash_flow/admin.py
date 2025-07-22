@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Transaction, Status, OperationType, Category, SubCategory
+from .models import Category, OperationType, Status, SubCategory, Transaction
 
 
 @admin.register(Transaction)

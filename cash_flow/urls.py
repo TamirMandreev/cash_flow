@@ -1,4 +1,5 @@
 from django.urls import path
+
 from cash_flow import views
 from cash_flow.views import load_categories, load_subcategories
 
@@ -82,7 +83,6 @@ urlpatterns = [
         views.SubCategoryDeleteView.as_view(),
         name="subcategory_delete",
     ),
-
-    path('ajax/load-categories/', load_categories, name='load_categories'),
-    path('ajax/load-subcategories/', load_subcategories, name='load_subcategories'),
+    path("ajax/load-categories/", load_categories, name="load_categories"),
+    path("ajax/load-subcategories/", load_subcategories, name="load_subcategories"),
 ]

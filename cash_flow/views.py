@@ -1,45 +1,45 @@
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-
-from django.views.generic import (
-    ListView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    TemplateView,
-)
+from django.views.generic import (CreateView, DeleteView, ListView,
+                                  TemplateView, UpdateView)
 
 from cash_flow.filters import TransactionFilter
-from cash_flow.models import Transaction, Status, OperationType, Category, SubCategory
+from cash_flow.models import (Category, OperationType, Status, SubCategory,
+                              Transaction)
 
 
 def load_categories(request):
-    '''Представление для обработки AJAX-запроса'''
+    """Представление для обработки AJAX-запроса"""
     # Получить id типа операции
-    operation_type_id = request.GET.get('operation_type_id')
+    operation_type_id = request.GET.get("operation_type_id")
     # Отфильтровать категории по типу
-    categories = Category.objects.filter(operation_type_id=operation_type_id).order_by('name')
+    categories = Category.objects.filter(operation_type_id=operation_type_id).order_by(
+        "name"
+    )
     # Подготовить контекст для передачи в шаблон
-    context = {'categories': categories}
+    context = {"categories": categories}
     # Отрендерить шаблон
-    options = render_to_string('cash_flow/category_dropdown_list_options.html', context)
+    options = render_to_string("cash_flow/category_dropdown_list_options.html", context)
     # Вернуть JSON-ответ
-    return JsonResponse({'options': options})
+    return JsonResponse({"options": options})
+
 
 def load_subcategories(request):
-    '''Представление для обработки AJAX-запроса'''
+    """Представление для обработки AJAX-запроса"""
     # Получить id категории
-    category_id = request.GET.get('category_id')
+    category_id = request.GET.get("category_id")
     # Отфильтровать подкатегории по категории
-    subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
+    subcategories = SubCategory.objects.filter(category_id=category_id).order_by("name")
     # Подготовить контекст для передачи в шаблон
-    context = {'subcategories': subcategories}
+    context = {"subcategories": subcategories}
     # Отрендерить шаблон
-    options = render_to_string('cash_flow/subcategory_dropdown_list_options.html', context)
+    options = render_to_string(
+        "cash_flow/subcategory_dropdown_list_options.html", context
+    )
     # Вернуть JSON-ответ
-    return JsonResponse({'options': options})
+    return JsonResponse({"options": options})
+
 
 class TransactionListView(ListView):
     """Представление для отображения списка транзакций"""

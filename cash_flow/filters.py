@@ -1,8 +1,6 @@
 import django_filters
-from django import forms
 
-
-from .models import Transaction, Status, OperationType, Category, SubCategory
+from .models import Category, OperationType, Status, SubCategory, Transaction
 
 
 class TransactionFilter(django_filters.FilterSet):

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, ListView,
                                   TemplateView, UpdateView)
 
+from cash_flow import services
 from cash_flow.filters import TransactionFilter
 from cash_flow.models import (Category, OperationType, Status, SubCategory,
                               Transaction)
@@ -14,9 +15,7 @@ def load_categories(request):
     # Получить id типа операции
     operation_type_id = request.GET.get("operation_type_id")
     # Отфильтровать категории по типу
-    categories = Category.objects.filter(operation_type_id=operation_type_id).order_by(
-        "name"
-    )
+    categories = services.load_categories(operation_type_id)
     # Подготовить контекст для передачи в шаблон
     context = {"categories": categories}
     # Отрендерить шаблон
@@ -30,7 +29,7 @@ def load_subcategories(request):
     # Получить id категории
     category_id = request.GET.get("category_id")
     # Отфильтровать подкатегории по категории
-    subcategories = SubCategory.objects.filter(category_id=category_id).order_by("name")
+    subcategories = load_subcategories(category_id)
     # Подготовить контекст для передачи в шаблон
     context = {"subcategories": subcategories}
     # Отрендерить шаблон

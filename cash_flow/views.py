@@ -90,33 +90,7 @@ class TransactionCreateView(CreateView):
     def get_form(self, form_class=None):
         # Вызвать родительскую реализацию get_form
         form = super().get_form(form_class)
-
-        # form.fields - словарь, содержащий все поля формы
-        # Для полей category и subcategory установить пустой queryset
-        form.fields["category"].queryset = Category.objects.none()
-        form.fields["subcategory"].queryset = SubCategory.objects.none()
-
-        # Если в форме есть operation_type, фильтруем категории
-        if "operation_type" in form.data:
-            # Получить id типа операции
-            operation_type_id = int(form.data.get("operation_type"))
-            # В поле category установить отфильтрованный по типу операции queryset
-            form.fields["category"].queryset = Category.objects.filter(
-                operation_type_id=operation_type_id
-            ).order_by("name")
-
-        # Если в форме есть category, фильтруем подкатегории
-        if "category" in form.data:
-            # Получить id категории
-            category_id = int(form.data.get("category"))
-            # В поле subcategory установить отфильтрованный по категории queryset
-            form.fields["subcategory"].queryset = SubCategory.objects.filter(
-                category_id=category_id
-            ).order_by("name")
-
-        # Вернуть форму
-        return form
-
+        return services.prepare_transaction_form_fields(form)
 
 class TransactionUpdateView(UpdateView):
     """Представление для обновления транзакции"""

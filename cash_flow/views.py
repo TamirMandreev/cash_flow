@@ -29,7 +29,7 @@ def load_subcategories(request):
     # Получить id категории
     category_id = request.GET.get("category_id")
     # Отфильтровать подкатегории по категории
-    subcategories = load_subcategories(category_id)
+    subcategories = services.load_subcategories(category_id)
     # Подготовить контекст для передачи в шаблон
     context = {"subcategories": subcategories}
     # Отрендерить шаблон

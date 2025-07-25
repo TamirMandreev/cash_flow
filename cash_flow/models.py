@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -87,6 +88,14 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.created_at} | {self.operation_type} | {self.amount} руб. | {self.status}"
+
+    def save(self):
+        if self.category.operation_type != self.operation_type:
+            raise ValidationError('Выбранная категория не соответствует указанному типу операции')
+
+        if self.subcategory.category != self.category:
+            raise ValidationError('Выбранная подкатегория не соответствует указанной категории')
+        super().save()
 
     class Meta:
         verbose_name = "Транзакция"

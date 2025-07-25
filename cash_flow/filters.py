@@ -6,18 +6,16 @@ from .models import Category, OperationType, Status, SubCategory, Transaction
 class TransactionFilter(django_filters.FilterSet):
     """Класс для фильтрации модели Transaction"""
 
-    # Добавить фильтрацию по диапазонам дат
-    date_range = django_filters.DateFromToRangeFilter(  # DateFromToRangeFilter - фильтр для работы с диапазоном дат
-        field_name="created_at",  # Указываем по какому полю выполнять фильтрацию
-        label="Период дат",  # Задаем человекочитаемую метку для поля формы. Если не указать, будет использовано имя "date_range"
-        widget=django_filters.widgets.RangeWidget(  # Определяем виджет для отображения. RangeWidget - специальный виджет для диапазонов значений
-            attrs={"type": "date"}  # Делаем поля ввода типа "дата"
+    date_range = django_filters.DateFromToRangeFilter(
+        field_name="created_at",
+        label="Период дат",
+        widget=django_filters.widgets.RangeWidget(
+            attrs={"type": "date"}
         ),
     )
-    #
-    status = django_filters.ModelChoiceFilter(  # ModelChoiceFilter - фильтр для выбора значения из связанной модели (Создает выпадающий список со всеми возможными статусами)
-        queryset=Status.objects.all(),  # Откуда брать варианты для выпадающего списка
-        empty_label="Все статусы",  # Добавляет пустой вариант в начало списка
+    status = django_filters.ModelChoiceFilter(
+        queryset=Status.objects.all(),
+        empty_label="Все статусы",
     )
 
     operation_type = django_filters.ModelChoiceFilter(

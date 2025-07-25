@@ -44,7 +44,6 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
-        # Сделать комбинацию указанных полей уникальной
         unique_together = ("name", "operation_type")
 
 
@@ -62,36 +61,28 @@ class SubCategory(models.Model):
     class Meta:
         verbose_name = "Подкатегория"
         verbose_name_plural = "Подкатегории"
-        # Сделать комбинацию указанных полей уникальной
         unique_together = ("name", "category")
 
 
 class Transaction(models.Model):
     """Основная модель для учета денежных операций"""
 
-    # Дата создания записи
     created_at = models.DateField(
         default=timezone.now, verbose_name="Дата создания записи"
     )
-    # Статус
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Статус")
-    # Тип операции
     operation_type = models.ForeignKey(
         OperationType, on_delete=models.PROTECT, verbose_name="Тип операции"
     )
-    # Категория
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, verbose_name="Категория"
     )
-    # Подкатегория
     subcategory = models.ForeignKey(
         SubCategory, on_delete=models.PROTECT, verbose_name="Подкатегория"
     )
-    # Сумма
     amount = models.DecimalField(
         max_digits=12, decimal_places=2, verbose_name="Сумма (руб)"
     )
-    # Комментарий
     comment = models.TextField(null=True, blank=True, verbose_name="Комментарий")
 
     def __str__(self):

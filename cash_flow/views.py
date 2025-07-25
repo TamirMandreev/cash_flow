@@ -12,31 +12,21 @@ from cash_flow.models import (Category, OperationType, Status, SubCategory,
 
 def load_categories(request):
     """Представление для обработки AJAX-запроса"""
-    # Получить id типа операции
     operation_type_id = request.GET.get("operation_type_id")
-    # Отфильтровать категории по типу
     categories = services.load_categories(operation_type_id)
-    # Подготовить контекст для передачи в шаблон
     context = {"categories": categories}
-    # Отрендерить шаблон
     options = render_to_string("cash_flow/category_dropdown_list_options.html", context)
-    # Вернуть JSON-ответ
     return JsonResponse({"options": options})
 
 
 def load_subcategories(request):
     """Представление для обработки AJAX-запроса"""
-    # Получить id категории
     category_id = request.GET.get("category_id")
-    # Отфильтровать подкатегории по категории
     subcategories = services.load_subcategories(category_id)
-    # Подготовить контекст для передачи в шаблон
     context = {"subcategories": subcategories}
-    # Отрендерить шаблон
     options = render_to_string(
         "cash_flow/subcategory_dropdown_list_options.html", context
     )
-    # Вернуть JSON-ответ
     return JsonResponse({"options": options})
 
 
@@ -46,11 +36,13 @@ class TransactionListView(ListView):
     model = Transaction
     template_name = "cash_flow/transaction_list.html"
     context_object_name = "transactions"
-    # Указать класс фильтра, который будет обрабатывать параметры запроса
-    filterset_class = TransactionFilter  # TransactionFilter - кастомный класс фильтра
+    filterset_class = TransactionFilter
 
     def get_queryset(self):
-        # Получить все объекты модели Transaction + все связанные данные
+        '''
+        Получает набор данных из базы данных, который будет использован в представлении
+        :return:
+        '''
         queryset = (
             super()
             .get_queryset()
@@ -61,18 +53,17 @@ class TransactionListView(ListView):
                 "subcategory",
             )
         )
-        # Применить фильтр. В TransactionFilter передаем параметры из URL (self.request.GET) и queryset
         self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
-        # Возвратить результат фильтрации
         return self.filterset.qs
 
-    # Передать фильтр в шаблон
     def get_context_data(self, **kwargs):
-        # Берем стандартные данные, которые Django уже подготовил
+        '''
+        Расширяет стандартный контекст представления, добавляя ссылку на фильтр
+        :param kwargs:
+        :return:
+        '''
         context = super().get_context_data(**kwargs)
-        # Добавляем наш фильтр в эти данные под ключом 'filter'. filterset определяется в методе get_queryset
         context["filter"] = self.filterset
-        # Возвращаем обновленный набор данных
         return context
 
 
@@ -80,15 +71,11 @@ class TransactionCreateView(CreateView):
     """Представление для создания транзакции"""
 
     model = Transaction
-    # Поля, которые будут отображться в форме
     fields = "__all__"
-    # Куда пользователь будет перенаправлен после успешной отправки формы
     success_url = reverse_lazy("transactions")
 
-    # Метод get_form возвращает экземпляр формы, используемой в представлении
-    # form_class указывает, какой класс формы следует использовать
     def get_form(self, form_class=None):
-        # Вызвать родительскую реализацию get_form
+        '''Кастомизирует форму'''
         form = super().get_form(form_class)
         return services.prepare_transaction_form_fields(form)
 

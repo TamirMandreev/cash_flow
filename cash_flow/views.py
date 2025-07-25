@@ -39,10 +39,10 @@ class TransactionListView(ListView):
     filterset_class = TransactionFilter
 
     def get_queryset(self):
-        '''
+        """
         Получает набор данных из базы данных, который будет использован в представлении
         :return:
-        '''
+        """
         queryset = (
             super()
             .get_queryset()
@@ -57,11 +57,11 @@ class TransactionListView(ListView):
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
-        '''
+        """
         Расширяет стандартный контекст представления, добавляя ссылку на фильтр
         :param kwargs:
         :return:
-        '''
+        """
         context = super().get_context_data(**kwargs)
         context["filter"] = self.filterset
         return context
@@ -75,9 +75,10 @@ class TransactionCreateView(CreateView):
     success_url = reverse_lazy("transactions")
 
     def get_form(self, form_class=None):
-        '''Кастомизирует форму'''
+        """Кастомизирует форму"""
         form = super().get_form(form_class)
         return services.prepare_transaction_form_fields(form)
+
 
 class TransactionUpdateView(UpdateView):
     """Представление для обновления транзакции"""

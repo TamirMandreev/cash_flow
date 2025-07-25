@@ -9,9 +9,7 @@ class TransactionFilter(django_filters.FilterSet):
     date_range = django_filters.DateFromToRangeFilter(
         field_name="created_at",
         label="Период дат",
-        widget=django_filters.widgets.RangeWidget(
-            attrs={"type": "date"}
-        ),
+        widget=django_filters.widgets.RangeWidget(attrs={"type": "date"}),
     )
     status = django_filters.ModelChoiceFilter(
         queryset=Status.objects.all(),
